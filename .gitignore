@@ -1,0 +1,11 @@
+# Lixo de Python e Excel
+__pycache__/
+*.pyc
+~$*
+Thumbs.db
+Desktop.ini
+
+# Pastas que ficam só no computador (não sobem)
+/Batizado/
+/CTI - Fotos e Recados/
+/Documentos/
