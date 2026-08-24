@@ -16,7 +16,7 @@ Paciente: **Cecília Maria Albergaria Silva**, nasc. 30/06/2020.
 
 Resumos: `Exames/Resumo Exames.xlsm` (macro ajusta altura das linhas ao ordenar), `Relatórios/Resumo Relatórios.xlsx`, `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
 
-Evolução (com caixinhas): `Exames/Evolução Exames.xlsm` — **é o arquivo ativo**. O `.xlsx` intermediário não deve ficar na pasta (OneDrive/Excel travam).
+Evolução (com caixinhas): `Exames/Evolução Exames.xlsm` — **é o arquivo ativo**. O `.xlsx` intermediário não deve ficar na pasta (OneDrive/Excel travam). Macros: caixinhas, impressão de gráficos (títulos destacados + tabela zebrada dos únicos) e **ajuste de altura** nas abas Dados Completo / Dados Selecionados.
 
 Evolução do CTI: `Exames/Exames Laboratorias - CTI/Evolução Exames CTI.xlsx` (sem macros).
 

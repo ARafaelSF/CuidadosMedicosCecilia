@@ -16,10 +16,18 @@ Private Sub Workbook_Open()
     Next btn
     AtualizarImpressao
     EsconderSeriesInvisiveis
+    AjustarAlturasDados
 End Sub
 
 Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range)
     If Sh.Name <> "Escolher" Then Exit Sub
     If Intersect(Target, Sh.Columns(2)) Is Nothing Then Exit Sub
     AtualizarImpressao
+End Sub
+
+Private Sub Workbook_SheetActivate(ByVal Sh As Object)
+    On Error Resume Next
+    If Sh.Name = "Dados Completo" Or Sh.Name = "Dados Selecionados" Then
+        AjustarAlturasDados
+    End If
 End Sub

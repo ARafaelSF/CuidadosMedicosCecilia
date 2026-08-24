@@ -217,6 +217,7 @@ Private Sub ImprimirGraficos(todos As Boolean)
         If Len(titulo) = 0 Then titulo = Trim$(CStr(wsG.Cells(origRow - 2, 1).Value))
         If Len(titulo) = 0 Then titulo = Trim$(CStr(wsG.Cells(origRow - 1, 1).Value))
         If Len(titulo) = 0 Then titulo = nm
+        titleH = 20
         wsP.Rows(r).RowHeight = titleH
         wsP.Rows(r + 1).RowHeight = picH + 4
 
@@ -226,11 +227,16 @@ Private Sub ImprimirGraficos(todos As Boolean)
             GoTo ProxImp
         End If
 
-        wsP.Cells(r, 1).Value = titulo
-        With wsP.Cells(r, 1).Font
-            .Bold = True
-            .Size = 10
-            .Name = "Calibri"
+        ' Título destacado (fundo + negrito) acima de cada gráfico
+        With wsP.Cells(r, 1)
+            .Value = titulo
+            .Font.Bold = True
+            .Font.Size = 11
+            .Font.Name = "Calibri"
+            .Font.Color = RGB(31, 78, 121)
+            .Interior.Color = RGB(217, 234, 247)
+            .HorizontalAlignment = xlLeft
+            .VerticalAlignment = xlCenter
         End With
 
         n = n + 1
@@ -263,7 +269,15 @@ ProxImp:
         If co.Left + co.Width > maxDir Then maxDir = co.Left + co.Width
     Next co
     If maxDir > 40 Then AjustarLarguraColuna wsP, 1, maxDir + 12
-    wsP.PageSetup.PrintArea = "$A$1:$A$" & CStr(Application.Max(r - 1, 1))
+    ' Inclui colunas da tabela de dosagens únicas (A–F) quando existir
+    If nUni > 0 Then
+        wsP.PageSetup.PrintArea = "$A$1:$F$" & CStr(Application.Max(r - 1, 1))
+        wsP.PageSetup.FitToPagesWide = 1
+        wsP.PageSetup.FitToPagesTall = False
+        wsP.PageSetup.Zoom = False
+    Else
+        wsP.PageSetup.PrintArea = "$A$1:$A$" & CStr(Application.Max(r - 1, 1))
+    End If
     Application.CutCopyMode = False
     wsP.Activate
     wsP.Range("A1").Select
@@ -382,13 +396,43 @@ Private Function ColocarGraficoNaFolha(co As ChartObject, wsP As Worksheet, _
     ColocarGraficoNaFolha = True
 End Function
 
+Public Sub AjustarAlturasDados()
+    ' Altura das linhas acompanha o texto (como no Resumo).
+    Dim ws As Worksheet
+    Dim nomes As Variant
+    Dim i As Long
+    On Error Resume Next
+    nomes = Array(ABA_DADOS_COMP, ABA_DADOS_SEL)
+    For i = LBound(nomes) To UBound(nomes)
+        Set ws = Folha(CStr(nomes(i)))
+        If Not ws Is Nothing Then AjustarAlturasNaAba ws
+    Next i
+    On Error GoTo 0
+End Sub
+
+Private Sub AjustarAlturasNaAba(ws As Worksheet)
+    Dim last As Long, r As Long, h As Double
+    If ws Is Nothing Then Exit Sub
+    last = ws.UsedRange.Row + ws.UsedRange.Rows.Count - 1
+    If last < 4 Then Exit Sub
+    Application.ScreenUpdating = False
+    For r = 4 To last
+        ws.Rows(r).AutoFit
+        h = ws.Rows(r).RowHeight
+        If h < 15 Then ws.Rows(r).RowHeight = 15
+        If h > 90 Then ws.Rows(r).RowHeight = 90
+    Next r
+    Application.ScreenUpdating = True
+End Sub
+
 Private Function ColarTabelaUnicos(wsP As Worksheet, wsE As Worksheet, todos As Boolean, _
     nGraf As Long, ByRef r As Long, porPagina As Long) As Long
     Dim wsU As Worksheet
     Dim lastU As Long, i As Long, nLin As Long
     Dim er As Long
     Dim inclui As Boolean
-    Dim txt As String
+    Dim zebra As Boolean
+    Dim rng As Range
 
     ColarTabelaUnicos = 0
     Set wsU = Folha(ABA_UNICOS)
@@ -418,23 +462,59 @@ Private Function ColarTabelaUnicos(wsP As Worksheet, wsE As Worksheet, todos As 
         On Error GoTo 0
     End If
 
-    wsP.Cells(r, 1).Value = "Exames com um unico resultado (sem grafico)"
-    With wsP.Cells(r, 1).Font
-        .Bold = True
-        .Size = 12
-        .Name = "Calibri"
+    ' Larguras para tabela zebrada (impressão em retrato)
+    AjustarLarguraColuna wsP, 1, 160
+    AjustarLarguraColuna wsP, 2, 70
+    AjustarLarguraColuna wsP, 3, 90
+    AjustarLarguraColuna wsP, 4, 55
+    AjustarLarguraColuna wsP, 5, 120
+    AjustarLarguraColuna wsP, 6, 140
+
+    wsP.Range(wsP.Cells(r, 1), wsP.Cells(r, 6)).Merge
+    With wsP.Cells(r, 1)
+        .Value = "Exames com um unico resultado (sem grafico)"
+        .Font.Bold = True
+        .Font.Size = 12
+        .Font.Name = "Calibri"
+        .Font.Color = RGB(31, 78, 121)
+        .Interior.Color = RGB(217, 234, 247)
+        .VerticalAlignment = xlCenter
     End With
     wsP.Rows(r).RowHeight = 22
     r = r + 1
-    wsP.Cells(r, 1).Value = "So ha um ponto no laudo (inclui as dosagens pontuais). A evolucao aparece quando houver uma nova coleta."
-    With wsP.Cells(r, 1).Font
-        .Size = 9
-        .Name = "Calibri"
-        .Italic = True
+
+    wsP.Range(wsP.Cells(r, 1), wsP.Cells(r, 6)).Merge
+    With wsP.Cells(r, 1)
+        .Value = "So ha um ponto no laudo (inclui as dosagens pontuais). A evolucao aparece quando houver uma nova coleta."
+        .Font.Size = 9
+        .Font.Name = "Calibri"
+        .Font.Italic = True
+        .Font.Color = RGB(90, 90, 90)
     End With
     wsP.Rows(r).RowHeight = 18
     r = r + 1
 
+    ' Cabeçalho da tabela
+    wsP.Cells(r, 1).Value = "Exame"
+    wsP.Cells(r, 2).Value = "Data"
+    wsP.Cells(r, 3).Value = "Resultado"
+    wsP.Cells(r, 4).Value = "Unidade"
+    wsP.Cells(r, 5).Value = "Faixa do laudo"
+    wsP.Cells(r, 6).Value = "Arquivo"
+    Set rng = wsP.Range(wsP.Cells(r, 1), wsP.Cells(r, 6))
+    With rng
+        .Font.Bold = True
+        .Font.Size = 9
+        .Font.Name = "Calibri"
+        .Font.Color = RGB(255, 255, 255)
+        .Interior.Color = RGB(31, 78, 121)
+        .HorizontalAlignment = xlCenter
+        .VerticalAlignment = xlCenter
+    End With
+    wsP.Rows(r).RowHeight = 18
+    r = r + 1
+
+    zebra = False
     For i = 2 To lastU
         inclui = todos
         If Not inclui Then
@@ -446,14 +526,36 @@ Private Function ColarTabelaUnicos(wsP As Worksheet, wsE As Worksheet, todos As 
             If er > 0 Then inclui = CelulaMarcada(wsE.Cells(er, 2).Value)
         End If
         If Not inclui Then GoTo ProxU
-        txt = TextoUnico(wsU, i)
-        wsP.Cells(r, 1).Value = txt
-        With wsP.Cells(r, 1)
-            .WrapText = True
-            .Font.Size = 10
+
+        wsP.Cells(r, 1).Value = Trim$(CStr(wsU.Cells(i, 1).Value))
+        If IsDate(wsU.Cells(i, 2).Value) Then
+            wsP.Cells(r, 2).Value = Format$(CDate(wsU.Cells(i, 2).Value), "dd/mm/yyyy")
+        Else
+            wsP.Cells(r, 2).Value = Trim$(CStr(wsU.Cells(i, 2).Value))
+        End If
+        wsP.Cells(r, 3).Value = Trim$(CStr(wsU.Cells(i, 3).Value))
+        wsP.Cells(r, 4).Value = Trim$(CStr(wsU.Cells(i, 4).Value))
+        wsP.Cells(r, 5).Value = Trim$(CStr(wsU.Cells(i, 5).Value))
+        wsP.Cells(r, 6).Value = Trim$(CStr(wsU.Cells(i, 6).Value))
+
+        Set rng = wsP.Range(wsP.Cells(r, 1), wsP.Cells(r, 6))
+        With rng
+            .Font.Size = 9
             .Font.Name = "Calibri"
+            .WrapText = True
+            .VerticalAlignment = xlCenter
+            If zebra Then
+                .Interior.Color = RGB(242, 242, 242)
+            Else
+                .Interior.Pattern = xlNone
+            End If
         End With
-        wsP.Rows(r).RowHeight = 36
+        wsP.Cells(r, 2).HorizontalAlignment = xlCenter
+        wsP.Rows(r).AutoFit
+        If wsP.Rows(r).RowHeight < 16 Then wsP.Rows(r).RowHeight = 16
+        If wsP.Rows(r).RowHeight > 48 Then wsP.Rows(r).RowHeight = 48
+
+        zebra = Not zebra
         r = r + 1
         ColarTabelaUnicos = ColarTabelaUnicos + 1
 ProxU:

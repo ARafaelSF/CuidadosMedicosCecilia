@@ -1637,7 +1637,7 @@ def build(path: Path):
 
     f_title_exam = wb.add_format({
         "bold": True, "font_size": 11, "font_color": navy, "font_name": "Calibri",
-        "valign": "vcenter",
+        "valign": "vcenter", "bg_color": "#D6EAF8", "border": 0,
     })
 
     def setup_print_sheet(sh):
