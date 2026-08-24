@@ -14,17 +14,17 @@ DEST_EVOL_XLSX = TEMP / "EvolucaoExames.xlsx"
 DEST_EVOL_XLSM_TMP = TEMP / "EvolucaoExames.xlsm"
 DEST_EVOL_XLSM = EXAMES / "Evolução Exames.xlsm"
 
-RESUMO_EXAMES = EXAMES / "Resumo Exames.xlsx"
+RESUMO_EXAMES = EXAMES / "Resumo Exames.xlsm"
 RESUMO_RELATORIOS = RELATORIOS / "Resumo Relatórios.xlsx"
 RESUMO_CTI = CTI / "Resumo Exames CTI.xlsx"
 EVOL_CTI = CTI / "Evolução Exames CTI.xlsx"
 
 TIPOS_EXAME = [
     "Sangue", "Urina", "Imagem", "Pezinho", "Audiologia", "EEG",
-    "Suor", "Alta", "Documento",
+    "Suor",
 ]
 TIPOS_RELATORIO = [
-    "Pediatria", "Endocrinologia", "Neurologia", "Genética", "Ortopedia",
+    "Alta", "Pediatria", "Endocrinologia", "Neurologia", "Genética", "Ortopedia",
     "Oftalmologia", "Fonoaudiologia", "Fisioterapia", "TO", "Psicologia",
-    "Pedagogia", "Nutrição", "Funcional", "Natação", "Equoterapia",
+    "Pedagogia", "Nutrição", "Funcional", "Natação", "Equoterapia", "Escola",
 ]

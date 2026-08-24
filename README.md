@@ -9,15 +9,15 @@ Repositório **privado**. São dados de saúde: não tornar público.
 | Pasta | O que tem |
 |---|---|
 | `codigo/` | Scripts que geram os resumos e a evolução (Python + macros do Excel). |
-| `Exames/` | Laudos (sangue, imagem, audiologia, pezinho, EEG, suor, altas). O CTI laboratorial (ago–set/2020, Hospital BH) fica em `Exames/Exames Laboratorias - CTI/` — **não misturar** com o resto. |
-| `Relatórios/` | Consultas e terapias (médicos, fono, fisio, escola…). |
+| `Exames/` | Laudos (sangue, imagem, audiologia, pezinho, EEG, suor). O CTI laboratorial (ago–set/2020, Hospital BH) fica em `Exames/Exames Laboratorias - CTI/` — **não misturar** com o resto. |
+| `Relatórios/` | Consultas, terapias, escola e **sumários de alta** hospitalar. |
 | `Solicitação Medicamento SUS/` | Pedido e documentos da solicitação de medicamento. |
 
-Não entram no Git (ficam só no computador): Batizado, Documentos, CTI - Fotos e Recados.
+Não entram no Git (ficam só no computador): Batizado, Documentos, Livros e Apostilas, CTI - Fotos e Recados.
 
 ## Arquivos principais
 
-- `Exames/Resumo Exames.xlsx`
+- `Exames/Resumo Exames.xlsm` — resumo com tabela nativa e macro de altura das linhas
 - `Relatórios/Resumo Relatórios.xlsx`
 - `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`
 - `Exames/Evolução Exames.xlsm` — evolução com caixinhas (**arquivo ativo**; habilitar macros)
@@ -44,14 +44,16 @@ Regras:
 - **Não renomear** os PDFs do CTI (`3063463.PDF` …).
 - PDF novo ainda sem nome: colocar na raiz da pasta `_Organizado` no computador (essa raiz não vai para o Git).
 
-Tipos de exame: Sangue, Urina, Imagem, Pezinho, Audiologia, EEG, Suor, Alta, Documento.
+Tipos de exame: Sangue, Urina, Imagem, Pezinho, Audiologia, EEG, Suor.
+
+Tipos de relatório (exemplos): Alta, Endocrino, Neuro, Fonoaudiologia, Fisioterapia, Escola, Funcional, Natação, Pedagogia, Psicologia, TO.
 
 ## PDF novo
 
 1. Ler o laudo.
 2. CTI ago–set/2020 no Hospital BH → pasta CTI, **sem** renomear; atualizar só os Excel do CTI.
 3. Laboratório / imagem / triagem → `Exames/`.
-4. Consulta, terapia, escola, parecer → `Relatórios/`.
+4. Consulta, terapia, escola, parecer ou **sumário de alta** → `Relatórios/`.
 5. Renomear no padrão, uma linha no resumo, e se for numérico incluir na evolução.
 
 ## Evolução (fora do CTI)

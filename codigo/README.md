@@ -8,13 +8,13 @@ Paciente: **Cecília Maria Albergaria Silva**, nasc. 30/06/2020.
 
 | Pasta | O que entra |
 |---|---|
-| `Exames/` | Laudos laboratoriais, imagem, audiologia, pezinho, alta, EEG. **Não** misturar o CTI. |
+| `Exames/` | Laudos laboratoriais, imagem, audiologia, pezinho, EEG. **Não** misturar o CTI. |
 | `Exames/Exames Laboratorias - CTI/` | Internação ago–set/2020 (Hospital BH). Nomes originais das prescrições. `Todos.pdf` é a juntada. |
-| `Relatórios/` | Consultas e terapias (médicos, fono, fisio, pedagógicos…). |
-| `Documentos/` | Cartão SUS, certidão, etc. |
+| `Relatórios/` | Consultas, terapias, escola e sumários de alta hospitalar. |
+| `Documentos/` | Cartão SUS, certidão, declaração de nascido vivo, etc. |
 | `_Organizado/` (raiz) | Só PDFs **novos**, ainda sem nome. Depois de processar, a raiz fica vazia. |
 
-Resumos: `Exames/Resumo Exames.xlsx`, `Relatórios/Resumo Relatórios.xlsx`, `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
+Resumos: `Exames/Resumo Exames.xlsm` (macro ajusta altura das linhas ao ordenar), `Relatórios/Resumo Relatórios.xlsx`, `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
 
 Evolução (com caixinhas): `Exames/Evolução Exames.xlsm` — **é o arquivo ativo**. O `.xlsx` intermediário não deve ficar na pasta (OneDrive/Excel travam).
 
@@ -42,19 +42,19 @@ Regras:
 - **Não renomear** os PDFs do CTI (`3063463.PDF` …). O Excel do CTI aponta o nome original.
 - Não misturar sangue de consulta com a pasta do CTI.
 
-Tipos de exame usados: Sangue, Urina, Imagem, Pezinho, Audiologia, EEG, Suor, Alta, Documento.
+Tipos de exame usados: Sangue, Urina, Imagem, Pezinho, Audiologia, EEG, Suor.
 
-Tipos de relatório (exemplos): Pediatria, Endocrinologia, Neurologia, Genética, Fisioterapia, Funcional, Natação, Pedagogia, Psicologia, TO, Fonoaudiologia.
+Tipos de relatório (exemplos): Alta, Pediatria, Endocrinologia, Neurologia, Genética, Fisioterapia, Funcional, Natação, Pedagogia, Psicologia, TO, Fonoaudiologia, Escola.
 
 ## Como classificar um PDF novo
 
 1. Ler o laudo (texto ou, se for foto, o carimbo).
 2. É período **CTI ago–set/2020** no Hospital BH? → pasta CTI, **sem** renomear; atualizar só os Excel da pasta CTI.
 3. É laudo de laboratório/imagem/triagem? → `Exames/`.
-4. É consulta, terapia, escola, parecer? → `Relatórios/`.
+4. É consulta, terapia, escola, parecer ou **sumário de alta**? → `Relatórios/`.
 5. Renomear no padrão, mover, **uma linha** no resumo da pasta, e se for numérico incluir na evolução.
 
-O resumo (tabela nativa `TabelaExames` / equivalente) tem: Data | Tipo | Profissional | Descrição. No CTI também há coluna **Arquivo**.
+O resumo (tabela nativa `TabelaExames`) tem: Data | Tipo | Profissional | Descrição | Conferido. Arquivo ativo: **`.xlsm`** (macro `AjustarAlturasResumo` — altura das linhas acompanha o texto ao abrir/ordenar). Regenerar macros: `codigo/resumo/rebuild_xlsm.ps1`. No CTI também há coluna **Arquivo**.
 
 Impressão dos resumos: paisagem A4, caber na largura, repetir título nas páginas.
 

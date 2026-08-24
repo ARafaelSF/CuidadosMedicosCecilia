@@ -24,7 +24,7 @@ ABA_UNICOS = "Unicos"
 TABLES = [
     {
         "grupo": "Crescimento",
-        "titulo": "IGF-1 (somatomedina C)",
+        "titulo": "IGF-1 - Somatomedina C",
         "mostra": "Hormônio de crescimento ao longo do tempo",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -38,7 +38,7 @@ TABLES = [
     },
     {
         "grupo": "Crescimento",
-        "titulo": "IGFBP-3",
+        "titulo": "IGFBP-3 - proteína ligadora-3 do IGF",
         "mostra": "Proteína que transporta o IGF-1",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -51,7 +51,7 @@ TABLES = [
     },
     {
         "grupo": "Crescimento",
-        "titulo": "GH basal",
+        "titulo": "GH - hormônio de crescimento (basal)",
         "mostra": "Dosagem isolada (não substitui o teste de estímulo)",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -87,7 +87,7 @@ TABLES = [
     },
     {
         "grupo": "Tireoide",
-        "titulo": "TSH",
+        "titulo": "TSH ultra sensível",
         "mostra": "Hormônio que regula a tireoide",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -334,6 +334,20 @@ TABLES = [
     },
     {
         "grupo": "Hemograma",
+        "titulo": "Basófilos",
+        "mostra": "Absolutos. Parte do leucograma (só nos laudos que trazem o valor)",
+        "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
+        "linhas": [
+            [date(2024, 10, 15), 30, "/mm³", "até 200", ""],
+            [date(2025, 5, 28), 60, "/mm³", "até 200", ""],
+            [date(2025, 7, 28), 70, "/mm³", "até 200", ""],
+            [date(2026, 2, 3), 30, "/mm³", "até 200", ""],
+            [date(2026, 7, 29), 10, "/mm³", "até 200", ""],
+            [date(2026, 8, 12), 40, "/mm³", "até 200", ""],
+        ],
+    },
+    {
+        "grupo": "Hemograma",
         "titulo": "Plaquetas",
         "mostra": "Coagulação",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
@@ -364,7 +378,7 @@ TABLES = [
     },
     {
         "grupo": "Hemograma",
-        "titulo": "PCR",
+        "titulo": "PCR - proteína C reativa quantitativa",
         "mostra": "Marcador de inflamação",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -389,7 +403,7 @@ TABLES = [
     },
     {
         "grupo": "Ferro e vitaminas",
-        "titulo": "Ferritina",
+        "titulo": "Ferritina sérica",
         "mostra": "Reserva de ferro",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -412,7 +426,7 @@ TABLES = [
     },
     {
         "grupo": "Ferro e vitaminas",
-        "titulo": "Saturação da transferrina",
+        "titulo": "Índice de saturação da transferrina",
         "mostra": "Quanto do transporte de ferro está ocupado",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -422,7 +436,17 @@ TABLES = [
     },
     {
         "grupo": "Ferro e vitaminas",
-        "titulo": "Vitamina D (25-OH)",
+        "titulo": "Capacidade total de combinação do ferro",
+        "mostra": "CTFF / TIBC",
+        "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
+        "linhas": [
+            [date(2026, 2, 3), 332, "mcg/dL", "250 a 425", ""],
+            [date(2026, 8, 12), 333, "mcg/dL", "250 a 425", ""],
+        ],
+    },
+    {
+        "grupo": "Ferro e vitaminas",
+        "titulo": "25-Hidroxivitamina D",
         "mostra": "Dosagens disponíveis",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -442,7 +466,7 @@ TABLES = [
     },
     {
         "grupo": "Química",
-        "titulo": "Glicose de jejum",
+        "titulo": "Glicose - jejum",
         "mostra": "Açúcar no sangue",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
@@ -465,6 +489,16 @@ TABLES = [
             [date(2021, 4, 20), 136, 4.9, "Na 136–145 · K 3,5–5,1", ""],
             [date(2021, 12, 7), 138, 5.1, "Na 136–145 · K 3,5–5,1", "K no teto"],
             [date(2022, 3, 3), 134, 3.8, "Na 136–145 · K 3,5–5,1", "Na abaixo da faixa (arterial)"],
+        ],
+    },
+    {
+        "grupo": "Química",
+        "titulo": "Cálcio iônico",
+        "mostra": "Gráfico em mmol/L (o de 2022 veio em mg/dL; convertido ×4, como no laudo de 2024)",
+        "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
+        "linhas": [
+            [date(2022, 3, 3), 1.325, "mmol/L", "1,10 a 1,48 (convertido de 4,40–5,92 mg/dL)", "Arterial; 5,30 mg/dL no laudo"],
+            [date(2024, 10, 15), 1.23, "mmol/L", "até 18 a: 1,20 a 1,38", ""],
         ],
     },
     {
@@ -511,6 +545,16 @@ TABLES = [
     },
     {
         "grupo": "Química",
+        "titulo": "Fósforo",
+        "mostra": "Osso / rim",
+        "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
+        "linhas": [
+            [date(2021, 12, 7), 5.1, "mg/dL", "1–4 a ♀: 4,4 a 6,2", ""],
+            [date(2024, 10, 15), 5.2, "mg/dL", "1–4 a ♀: 4,4 a 6,2", ""],
+        ],
+    },
+    {
+        "grupo": "Química",
         "titulo": "IgE total",
         "mostra": "Alergia / atopia",
         "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
@@ -531,33 +575,19 @@ TABLES = [
     },
     {
         "grupo": "Química",
-        "titulo": "Dosagens pontuais",
-        "mostra": "Exames feitos uma vez (ou sem série)",
-        "cols": ["Data", "Exame", "Resultado", "Faixa do laudo", "Nota"],
-        "largo": True,
+        "titulo": "Gama GT",
+        "mostra": "Gama-GT · fígado / via biliar",
+        "cols": ["Data", "Resultado", "Unidade", "Faixa do laudo", "Nota"],
         "linhas": [
-            [date(2021, 4, 20), "ACTH", "6,0 pg/mL", "< 46,0", ""],
-            [date(2021, 4, 20), "T4 total", "9,7 mcg/dL", "4,5 a 12,3", ""],
-            [date(2021, 4, 20), "T3 total", "1,39 ng/mL", "0,60 a 1,71", ""],
-            [date(2021, 4, 20), "T3 livre", "4,1 pg/mL", "2,30 a 4,20", "No teto"],
-            [date(2021, 12, 18), "GGT", "13,4 U/L", "♀ < 38", ""],
-            [date(2024, 10, 15), "Colesterol (total / HDL / LDL)", "131 / 44 / 74 mg/dL", "cri. CT <170 · HDL >45 · LDL <110", "HDL um pouco abaixo"],
-            [date(2024, 10, 15), "Anti-TTG IgA", "0,8 U/mL", "não reagente < 7,0", ""],
-            [date(2025, 5, 28), "Homocisteína", "9,64 µmol/L", "♀ 5,75 a 18,89", ""],
-            [date(2025, 5, 28), "Amônia", "23 µmol/L", "11 a 32", ""],
-            [date(2025, 5, 28), "Lactato", "10,8 mg/dL", "4,5 a 19,8", ""],
-            [date(2025, 5, 28), "Aminoácidos (painel)", "quantitativo (12 aa + ASA)", "ver faixas no PDF", ""],
-            [date(2025, 7, 28), "FSH", "0,91 mUI/mL", "♀ 4–9 a: até 4,78", ""],
-            [date(2025, 7, 28), "LH", "0,07 mUI/mL", "pré-púbere ≤ 0,30", "Limite inferior do ensaio"],
-            [date(2025, 7, 28), "Estradiol", "19,0 pg/mL", "limite inferior do ensaio", "Pré-púbere"],
-            [date(2026, 8, 12), "IgE específico clara de ovo (f1)", "0,19 kU/L", "classe 0: < 0,35", "Muito baixo / classe 0"],
+            [date(2021, 12, 18), 13.4, "U/L", "♀ < 38", ""],
+            [date(2024, 10, 15), 15, "U/L", "♀ < 38", ""],
         ],
     },
     {
         "grupo": "Química",
-        "titulo": "TGO e TGP",
-        "mostra": "Fígado",
-        "cols": ["Data", "TGO (U/L)", "TGP (U/L)", "Faixa", "Nota"],
+        "titulo": "Transaminase oxalacética e pirúvica",
+        "mostra": "TGO/AST e TGP/ALT — nomes do laudo Hermes Pardini",
+        "cols": ["Data", "Oxalacética (U/L)", "Pirúvica (U/L)", "Faixa", "Nota"],
         "linhas": [
             [date(2021, 4, 20), 40.0, 18.0, "TGO ≤ 40 · TGP ≤ 41 (♀)", "TGO no teto"],
             [date(2021, 12, 18), 32.0, 17.0, "TGO ≤ 40 · TGP ≤ 41 (♀)", ""],
@@ -567,15 +597,50 @@ TABLES = [
         ],
     },
     {
+        "grupo": "Química",
+        "titulo": "Dosagens pontuais",
+        "mostra": "Exames feitos uma vez (ou sem série)",
+        "cols": ["Data", "Exame", "Resultado", "Faixa do laudo", "Nota"],
+        "largo": True,
+        "linhas": [
+            [date(2020, 10, 17), "Reticulócitos", "1,0% · 47.300/mm³", "0,5–1,5% ou 24.000–84.000", ""],
+            [date(2021, 4, 20), "ACTH", "6,0 pg/mL", "< 46,0", ""],
+            [date(2021, 4, 20), "T4 total", "9,7 mcg/dL", "4,5 a 12,3", ""],
+            [date(2021, 4, 20), "T3 total", "1,39 ng/mL", "0,60 a 1,71", ""],
+            [date(2021, 4, 20), "T3 livre", "4,1 pg/mL", "2,30 a 4,20", "No teto"],
+            [date(2022, 3, 3), "Coagulograma", "ver laudo", "internação", ""],
+            [date(2024, 10, 15), "Colesterol total e frações", "131 / HDL 44 / LDL 74 mg/dL", "cri. CT <170 · HDL >45 · LDL <110", "HDL um pouco abaixo"],
+            [date(2024, 10, 15), "Triglicérides", "50 mg/dL", "0–9 a jejum: < 75", ""],
+            [date(2024, 10, 15), "Imunoglobulinas IgA", "154 mg/dL", "4–6 a: 27 a 195", ""],
+            [date(2024, 10, 15), "Imunoglobulinas IgG", "980 mg/dL", "ver faixa etária no laudo", ""],
+            [date(2024, 10, 15), "Imunoglobulinas IgM", "74 mg/dL", "ver faixa etária no laudo", ""],
+            [date(2024, 10, 15), "TTG, anticorpos anti-transglutaminase tecidual-IgA", "0,8 U/mL", "não reagente < 7,0", ""],
+            [date(2024, 10, 15), "Paratormônio PTH intacto", "43,9 pg/mL", "18,5 a 88,0", ""],
+            [date(2024, 10, 15), "Albumina", "4,5 g/dL", "adultos no laudo: 3,7 a 5,2", ""],
+            [date(2024, 10, 15), "Proteínas totais e fracionadas", "6,9 g/dL", "1–18 a: 5,7 a 8,0", "globulinas 2,5 · A/G 1,8"],
+            [date(2025, 5, 28), "Gasometria venosa", "pH 7,41 · HCO3 24 · BE −0,9", "pH 7,32–7,43 · HCO3 22–29", ""],
+            [date(2025, 5, 28), "Homocisteína", "9,64 µmol/L", "♀ 5,75 a 18,89", ""],
+            [date(2025, 5, 28), "Amônia", "23 µmol/L", "11 a 32", ""],
+            [date(2025, 5, 28), "Ácido lático - lactato", "10,8 mg/dL", "4,5 a 19,8", ""],
+            [date(2025, 5, 28), "Perfil de aminoácidos - quantitativo", "12 aa + ASA", "ver faixas no PDF", ""],
+            [date(2025, 7, 28), "Hormônio folículo estimulante - FSH", "0,91 mUI/mL", "♀ 4–9 a: até 4,78", ""],
+            [date(2025, 7, 28), "Hormônio luteinizante - LH", "0,07 mUI/mL", "pré-púbere ≤ 0,30", "Limite inferior do ensaio"],
+            [date(2025, 7, 28), "Estradiol, 17 beta", "19,0 pg/mL", "limite inferior do ensaio", "Pré-púbere"],
+            [date(2026, 8, 12), "Transferrina", "271 mg/dL", "200 a 360", ""],
+            [date(2026, 8, 12), "IgE específico para clara de ovo (f1)", "0,19 kU/L", "classe 0: < 0,35", "Muito baixo / classe 0"],
+        ],
+    },
+    {
         "grupo": "Genética",
         "titulo": "Cariótipo, array-CGH e exoma",
         "mostra": "Um exame por linha (não se repetem)",
         "arquivo": "Sangue 2022-05-25 · 2022-10-04 · 2022-12-28 · 2025-04-21 (reanálise)",
         "cols": ["Data", "Exame", "Resultado", "", "Nota"],
         "linhas": [
-            [date(2022, 5, 25), "Cariótipo banda G", "46,XX", "", "Sem alteração na resolução analisada"],
-            [date(2022, 10, 4), "Array-CGH 400K", "arr(1-22,X)x2", "", "Sem CNV clínica"],
-            [date(2022, 12, 28), "Exoma", "Sem variante reportada", "", "Reanálise 2025: mesma conclusão"],
+            [date(2022, 5, 25), "Cariótipo com banda G", "46,XX", "", "Sem alteração na resolução analisada"],
+            [date(2022, 10, 4), "Análise cromossômica por array-CGH 400K (CGH+SNP)", "arr(1-22,X)x2", "", "Sem CNV clínica"],
+            [date(2022, 12, 28), "Exoma com análise de CNV e DNA mitocondrial", "Sem variante reportada", "", "Reanálise 2025: mesma conclusão"],
+            [date(2025, 4, 21), "Reanálise de dados brutos de exoma", "Mesma conclusão", "", ""],
         ],
     },
     {
@@ -616,18 +681,18 @@ TABLES = [
     },
     {
         "grupo": "Imagens e outros",
-        "titulo": "RM da sela túrcica",
-        "mostra": "Hipófise",
+        "titulo": "RM da hipófise",
+        "mostra": "Mesmo exame do portal: RM da hipófise",
         "cols": ["Data", "Exame", "Resumo do laudo", "", "Nota"],
         "largo": True,
         "linhas": [
-            [date(2025, 2, 4), "RM sela", "Discreta hipoplasia da adeno-hipófise (altura até 3,5 mm). DVP tópica, sem dilatação.", "", "Resto sem alteração no método"],
+            [date(2025, 2, 4), "RM da hipófise", "Discreta hipoplasia da adeno-hipófise (altura até 3,5 mm). DVP tópica, sem dilatação.", "", "Resto sem alteração no método"],
         ],
     },
     {
         "grupo": "Imagens e outros",
         "titulo": "Grupo sanguíneo",
-        "mostra": "Único laudo",
+        "mostra": "Grupo sanguíneo + fator Rh/Du",
         "arquivo": "Sangue - 2024-10-15 - Grupo RH",
         "cols": ["Data", "Resultado", "", "", "Nota"],
         "linhas": [
@@ -643,7 +708,7 @@ TABLES = [
         "largo": True,
         "linhas": [
             [date(2024, 10, 18), "Teste do suor", "Laudo em foto (número não extraído)", "", "Abrir o PDF"],
-            [date(2025, 6, 4), "RX crânio", "Laudo em foto", "", "Scan"],
+            [date(2025, 6, 4), "Radiografia digital do crânio (PA e perfil)", "Laudo em foto", "", "Dra. Milena · scan"],
         ],
     },
     {
@@ -685,10 +750,10 @@ _TIPO_GRUPO = {
 }
 # Coleta numa data, laudo impresso noutro PDF.
 _ARQ_FORCAR = {
-    ("IGF-1 (somatomedina C)", date(2021, 12, 18)): "Sangue - 2021-12-07",
-    ("IGFBP-3", date(2021, 12, 18)): "Sangue - 2021-12-07",
+    ("IGF-1 - Somatomedina C", date(2021, 12, 18)): "Sangue - 2021-12-07",
+    ("IGFBP-3 - proteína ligadora-3 do IGF", date(2021, 12, 18)): "Sangue - 2021-12-07",
     ("Fosfatase alcalina", date(2021, 12, 18)): "Sangue - 2021-12-07",
-    ("IGF-1 (somatomedina C)", date(2026, 8, 17)): "Sangue - 2026-08-12 - Fernanda Silva",
+    ("IGF-1 - Somatomedina C", date(2026, 8, 17)): "Sangue - 2026-08-12 - Fernanda Silva",
 }
 
 
@@ -936,7 +1001,7 @@ def _pt(d, v, lo=None, hi=None):
 
 
 GRAF = {
-    "IGF-1 (somatomedina C)": [
+    "IGF-1 - Somatomedina C": [
         {"unidade": "ng/mL", "pontos": [
             _pt(date(2021, 4, 20), 15.0, 18, 172),
             _pt(date(2021, 12, 18), 18.0, 18, 172),
@@ -946,7 +1011,7 @@ GRAF = {
             _pt(date(2026, 8, 17), 173, 35, 232),
         ]},
     ],
-    "IGFBP-3": [
+    "IGFBP-3 - proteína ligadora-3 do IGF": [
         {"unidade": "mcg/mL", "pontos": [
             _pt(date(2021, 4, 20), 1.00),
             _pt(date(2021, 12, 18), 1.50),
@@ -955,7 +1020,7 @@ GRAF = {
             _pt(date(2026, 8, 12), 3.3),
         ]},
     ],
-    "GH basal": [
+    "GH - hormônio de crescimento (basal)": [
         {"unidade": "ng/mL", "pontos": [
             _pt(date(2021, 12, 7), 1.08),
             _pt(date(2025, 1, 13), 2.17),
@@ -997,7 +1062,7 @@ GRAF = {
             {"data": date(2026, 7, 29), "crono": 6 * 12 + 1, "ossea": 4 * 12 + 2},
         ]},
     ],
-    "TSH": [
+    "TSH ultra sensível": [
         {"unidade": "µUI/mL", "pontos": [
             _pt(date(2021, 4, 20), 3.43, 0.70, 6.55),
             _pt(date(2021, 12, 7), 2.56, 0.70, 6.55),
@@ -1206,6 +1271,16 @@ GRAF = {
             _pt(date(2026, 8, 12), 100, 100, 1000),
         ]},
     ],
+    "Basófilos": [
+        {"unidade": "/mm³", "pontos": [
+            _pt(date(2024, 10, 15), 30, 0, 200),
+            _pt(date(2025, 5, 28), 60, 0, 200),
+            _pt(date(2025, 7, 28), 70, 0, 200),
+            _pt(date(2026, 2, 3), 30, 0, 200),
+            _pt(date(2026, 7, 29), 10, 0, 200),
+            _pt(date(2026, 8, 12), 40, 0, 200),
+        ]},
+    ],
     "Plaquetas": [
         {"unidade": "/mm³", "pontos": [
             _pt(date(2020, 10, 17), 180000, 150000, 450000),
@@ -1227,14 +1302,14 @@ GRAF = {
             _pt(date(2020, 10, 17), 28.0, 70, 140),
         ]},
     ],
-    "PCR": [
+    "PCR - proteína C reativa quantitativa": [
         {"unidade": "mg/L", "pontos": [
             _pt(date(2022, 2, 9), 1.9, 0, 10),
             _pt(date(2022, 3, 1), 1.0, 0, 10),
             _pt(date(2026, 7, 29), 4.0, 0, 10),
         ]},
     ],
-    "Ferritina": [
+    "Ferritina sérica": [
         {"unidade": "ng/mL", "pontos": [
             _pt(date(2024, 10, 15), 11.6, 7, 140),
             _pt(date(2025, 7, 28), 6.9, 7, 140),
@@ -1249,13 +1324,19 @@ GRAF = {
             _pt(date(2026, 8, 12), 123, 50, 120),
         ]},
     ],
-    "Saturação da transferrina": [
+    "Índice de saturação da transferrina": [
         {"unidade": "%", "pontos": [
             _pt(date(2025, 7, 28), 11, 15, 50),
             _pt(date(2026, 8, 12), 37, 15, 50),
         ]},
     ],
-    "Vitamina D (25-OH)": [
+    "Capacidade total de combinação do ferro": [
+        {"unidade": "mcg/dL", "pontos": [
+            _pt(date(2026, 2, 3), 332, 250, 425),
+            _pt(date(2026, 8, 12), 333, 250, 425),
+        ]},
+    ],
+    "25-Hidroxivitamina D": [
         {"unidade": "ng/mL", "pontos": [
             _pt(date(2021, 12, 7), 29.9, 20, 60),
             _pt(date(2024, 10, 15), 28.9, 20, 60),
@@ -1267,7 +1348,7 @@ GRAF = {
             _pt(date(2025, 5, 28), 672, 172, 890),
         ]},
     ],
-    "Glicose de jejum": [
+    "Glicose - jejum": [
         {"unidade": "mg/dL", "pontos": [
             _pt(date(2021, 4, 20), 94, 60, 99),
             _pt(date(2021, 12, 7), 60, 60, 99),
@@ -1290,6 +1371,12 @@ GRAF = {
             _pt(date(2021, 4, 20), 4.9, 3.5, 5.1),
             _pt(date(2021, 12, 7), 5.1, 3.5, 5.1),
             _pt(date(2022, 3, 3), 3.8, 3.5, 5.1),
+        ]},
+    ],
+    "Cálcio iônico": [
+        {"unidade": "mmol/L", "pontos": [
+            _pt(date(2022, 3, 3), 1.325, 1.10, 1.48),
+            _pt(date(2024, 10, 15), 1.23, 1.20, 1.38),
         ]},
     ],
     "Gasometria arterial": [
@@ -1318,6 +1405,12 @@ GRAF = {
             _pt(date(2026, 8, 12), 27.8, 10.8, 38.4),
         ]},
     ],
+    "Fósforo": [
+        {"unidade": "mg/dL", "pontos": [
+            _pt(date(2021, 12, 7), 5.1, 4.4, 6.2),
+            _pt(date(2024, 10, 15), 5.2, 4.4, 6.2),
+        ]},
+    ],
     "IgE total": [
         {"unidade": "UI/mL", "pontos": [
             _pt(date(2024, 10, 15), 104.7, 0, 313.5),
@@ -1330,15 +1423,21 @@ GRAF = {
             _pt(date(2024, 10, 15), 228, 114, 353),
         ]},
     ],
-    "TGO e TGP": [
-        {"titulo": "TGO", "unidade": "U/L", "pontos": [
+    "Gama GT": [
+        {"unidade": "U/L", "pontos": [
+            _pt(date(2021, 12, 18), 13.4, 0, 38),
+            _pt(date(2024, 10, 15), 15, 0, 38),
+        ]},
+    ],
+    "Transaminase oxalacética e pirúvica": [
+        {"titulo": "Transaminase oxalacética", "unidade": "U/L", "pontos": [
             _pt(date(2021, 4, 20), 40.0, 0, 40),
             _pt(date(2021, 12, 18), 32.0, 0, 40),
             _pt(date(2024, 10, 15), 22, 0, 40),
             _pt(date(2025, 7, 28), 29, 0, 40),
             _pt(date(2026, 8, 12), 20, 0, 33),
         ]},
-        {"titulo": "TGP", "unidade": "U/L", "pontos": [
+        {"titulo": "Transaminase pirúvica", "unidade": "U/L", "pontos": [
             _pt(date(2021, 4, 20), 18.0, 0, 41),
             _pt(date(2021, 12, 18), 17.0, 0, 41),
             _pt(date(2024, 10, 15), 15, 0, 41),
