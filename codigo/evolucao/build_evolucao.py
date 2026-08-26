@@ -703,11 +703,11 @@ TABLES = [
         "grupo": "Imagens e outros",
         "titulo": "Suor e imagens em foto",
         "mostra": "Número não extraído (PDF escaneado)",
-        "arquivo": "Suor - 2024-10-18 · Imagem - 2025-06-04",
+        "arquivo": "Suor - 2024-10-18 - Guilherme Rache · Imagem - 2025-06-04",
         "cols": ["Data", "Exame", "Resumo", "", "Nota"],
         "largo": True,
         "linhas": [
-            [date(2024, 10, 18), "Teste do suor", "Laudo em foto (número não extraído)", "", "Abrir o PDF"],
+            [date(2024, 10, 18), "Teste do suor", "Laudo em foto (número não extraído)", "", "Dr. Guilherme Rache"],
             [date(2025, 6, 4), "Radiografia digital do crânio (PA e perfil)", "Laudo em foto", "", "Dra. Milena · scan"],
         ],
     },
@@ -1644,7 +1644,9 @@ def build(path: Path):
         sh.set_landscape()
         sh.set_paper(9)
         sh.set_margins(0.4, 0.4, 0.45, 0.45)
-        sh.fit_to_pages(1, 0)
+        # Zoom fixo (não fit-to-page): assim as quebras verticais ficam
+        # previsíveis e dá para evitar título órfão no VBA.
+        sh.set_print_scale(82)
         sh.hide_gridlines(2)
         sh.center_horizontally()
         sh.set_column("A:A", 14)
@@ -1670,7 +1672,7 @@ def build(path: Path):
                 sh.set_row(r, 20)
                 sh.merge_range(r, 0, r, 5, current_grupo, f_h2)
                 r += 1
-            sh.set_row(r, 18)
+            sh.set_row(r, 16)
             sh.merge_range(r, 0, r, 5, t["titulo"], f_title_exam)
             r += 1
             sh.write(r, 0, t["mostra"], f_h3)
@@ -1698,7 +1700,7 @@ def build(path: Path):
                 if largo:
                     resumo = linha[2] if len(linha) > 2 else ""
                     extra = len(str(resumo or "")) + len(arq)
-                    sh.set_row(r, 46 if extra > 70 else 36)
+                    sh.set_row(r, 40 if extra > 70 else 30)
                     val0 = fmt_value(linha[0])
                     if isinstance(val0, date):
                         sh.write_datetime(r, 0, val0, df)
@@ -1709,7 +1711,7 @@ def build(path: Path):
                     sh.write(r, 4, linha[4] if len(linha) > 4 else None, lf)
                     sh.write(r, 5, arq or None, af)
                 else:
-                    sh.set_row(r, 18 if len(arq) < 34 else 28)
+                    sh.set_row(r, 15 if len(arq) < 34 else 24)
                     for c, val in enumerate(linha):
                         val = fmt_value(val)
                         if isinstance(val, date):
@@ -1723,7 +1725,7 @@ def build(path: Path):
                     sh.write(r, 5, arq or None, af)
                 r += 1
             r += 1
-            sh.set_row(r - 1, 8, f_empty)
+            sh.set_row(r - 1, 6, f_empty)
             mapa_local.append((6 + i, start0 + 1, r))
         sh.merge_range(
             r, 0, r + 1, 5,
@@ -1850,11 +1852,11 @@ def build(path: Path):
         ch.set_y_axis(ya)
         if legend is None:
             ch.set_legend({"none": True})
-            ch.set_plotarea({"layout": {"x": 0.09, "y": 0.05, "width": 0.86, "height": 0.74}})
+            ch.set_plotarea({"layout": {"x": 0.09, "y": 0.05, "width": 0.80, "height": 0.74}})
         else:
             legend["position"] = "bottom"
             ch.set_legend(legend)
-            ch.set_plotarea({"layout": {"x": 0.09, "y": 0.04, "width": 0.86, "height": 0.62}})
+            ch.set_plotarea({"layout": {"x": 0.09, "y": 0.04, "width": 0.80, "height": 0.62}})
         ch.set_size({"width": chart_px_w, "height": chart_px_h})
         ch.set_style(10)
         return ch

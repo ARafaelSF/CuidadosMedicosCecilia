@@ -11,10 +11,11 @@ Paciente: **Cecília Maria Albergaria Silva**, nasc. 30/06/2020.
 | `Exames/` | Laudos laboratoriais, imagem, audiologia, pezinho, EEG. **Não** misturar o CTI. |
 | `Exames/Exames Laboratorias - CTI/` | Internação ago–set/2020 (Hospital BH). Nomes originais das prescrições. `Todos.pdf` é a juntada. |
 | `Relatórios/` | Consultas, terapias, escola e sumários de alta hospitalar. |
+| `Relatórios/Imprimir/` | PDFs juntados por tipo+profissional (`Imprimir - …`). Originais intactos. Regenerar: `py -3 codigo/imprimir/juntar_relatorios.py`. |
 | `Documentos/` | Cartão SUS, certidão, declaração de nascido vivo, etc. |
 | `_Organizado/` (raiz) | Só PDFs **novos**, ainda sem nome. Depois de processar, a raiz fica vazia. |
 
-Resumos: `Exames/Resumo Exames.xlsm` (macro ajusta altura das linhas ao ordenar), `Relatórios/Resumo Relatórios.xlsx`, `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
+Resumos: `Exames/Resumo Exames.xlsm`, `Relatórios/Resumo Relatórios.xlsm` (ambos com macro de altura), `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
 
 Evolução (com caixinhas): `Exames/Evolução Exames.xlsm` — **é o arquivo ativo**. O `.xlsx` intermediário não deve ficar na pasta (OneDrive/Excel travam). Macros: caixinhas, impressão de gráficos (títulos destacados + tabela zebrada dos únicos) e **ajuste de altura** nas abas Dados Completo / Dados Selecionados.
 
@@ -54,7 +55,9 @@ Tipos de relatório (exemplos): Alta, Pediatria, Endocrinologia, Neurologia, Gen
 4. É consulta, terapia, escola, parecer ou **sumário de alta**? → `Relatórios/`.
 5. Renomear no padrão, mover, **uma linha** no resumo da pasta, e se for numérico incluir na evolução.
 
-O resumo (tabela nativa `TabelaExames`) tem: Data | Tipo | Profissional | Descrição | Conferido. Arquivo ativo: **`.xlsm`** (macro `AjustarAlturasResumo` — altura das linhas acompanha o texto ao abrir/ordenar). Regenerar macros: `codigo/resumo/rebuild_xlsm.ps1`. No CTI também há coluna **Arquivo**.
+O resumo de **Exames** (`TabelaExames`): Data | Tipo | Profissional | Descrição | Arquivo. Arquivo ativo: **`.xlsm`** (macro `AjustarAlturasResumo`). Regenerar: `codigo/resumo/gerar.ps1`.
+
+O resumo de **Relatórios** (`TabelaRelatorios`): Data | Tipo | Profissional | Descrição | Arquivo | Conferido | Impresso. Regenerar: `codigo/resumo/gerar_relatorios.ps1`. No CTI também há coluna **Arquivo**.
 
 Impressão dos resumos: paisagem A4, caber na largura, repetir título nas páginas.
 

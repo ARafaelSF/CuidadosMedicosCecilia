@@ -1,21 +1,30 @@
 $ErrorActionPreference = "Stop"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$codigo = Split-Path -Parent $here
-$root = Split-Path -Parent $codigo
-# Preferir xlsx gerado no TEMP (rebuild_resumo.py); senão Exames\
-$pathXlsxTmp = Join-Path $env:TEMP "ResumoExames.xlsx"
-$pathXlsx = [System.IO.Path]::Combine($root, "Exames", "Resumo Exames.xlsx")
-$pathXlsm = [System.IO.Path]::Combine($root, "Exames", "Resumo Exames.xlsm")
-$pathXlsmTmp = Join-Path $env:TEMP "ResumoExames.xlsm"
-$modBas = Join-Path $here "Alturas.bas"
-$wbBas = Join-Path $here "EstaPastaDeTrabalho.bas"
+$pathXlsxTmp = Join-Path $env:TEMP "ResumoRelatorios.xlsx"
+$pathXlsmTmp = Join-Path $env:TEMP "ResumoRelatorios.xlsm"
+$modBas = Join-Path $here "AlturasRelatorios.bas"
+$wbBas = Join-Path $here "EstaPastaDeTrabalhoRelatorios.bas"
+
+# Destinos Unicode via caminhos.py (evita mojibake do PowerShell)
+$destLines = py -3 -c @"
+import sys
+from pathlib import Path
+sys.path.insert(0, str(Path(r'$here').parent))
+from caminhos import RELATORIOS
+print(RELATORIOS / 'Resumo Relatórios.xlsx')
+print(RELATORIOS / 'Resumo Relatórios.xlsm')
+print(RELATORIOS)
+"@
+$pathXlsx = $destLines[0]
+$pathXlsm = $destLines[1]
 
 $src = $null
 if (Test-Path -LiteralPath $pathXlsxTmp) { $src = $pathXlsxTmp }
 elseif (Test-Path -LiteralPath $pathXlsx) { $src = $pathXlsx }
 elseif (Test-Path -LiteralPath $pathXlsm) { $src = $pathXlsm }
-else { throw "Não achei ResumoExames.xlsx / Resumo Exames.xlsx / .xlsm" }
+else { throw "Não achei ResumoRelatorios.xlsx / Resumo Relatórios.xlsx / .xlsm" }
 Write-Host "SRC $src"
+Write-Host "DEST_XLSM_TMP $pathXlsmTmp"
 
 Get-Process excel -ErrorAction SilentlyContinue | Stop-Process -Force
 Start-Sleep -Seconds 1
@@ -39,36 +48,30 @@ try {
     if ($null -eq $wb) { throw "Workbooks.Open retornou nulo para $src" }
     $ws = $wb.Worksheets.Item("Resumo")
 
-    # Última linha de dados = tem Tipo na coluna B
     $last = 2
-    for ($r = 3; $r -le 300; $r++) {
+    for ($r = 3; $r -le 400; $r++) {
         $tipo = [string]$ws.Cells.Item($r, 2).Value2
         if ([string]::IsNullOrWhiteSpace($tipo)) { break }
         $last = $r
     }
     if ($last -ge 3) {
         $ws.Range("D3:D$last").WrapText = $true
-        $ws.Range("D3:D$last").VerticalAlignment = -4108  # xlCenter
-
+        $ws.Range("D3:D$last").VerticalAlignment = -4108
         try {
-            while ($ws.ListObjects.Count -gt 0) {
-                $ws.ListObjects.Item(1).Delete()
-            }
+            while ($ws.ListObjects.Count -gt 0) { $ws.ListObjects.Item(1).Delete() }
         } catch {}
-        $rng = $ws.Range("A2:E$last")
-        $lo = $ws.ListObjects.Add(1, $rng, $null, 1)  # xlSrcRange, xlYes
-        $lo.Name = "TabelaExames"
-        # Limpa fills manuais (exceto Tipo na col B) para o zebrado da tabela aparecer
+        $rng = $ws.Range("A2:G$last")
+        $lo = $ws.ListObjects.Add(1, $rng, $null, 1)
+        $lo.Name = "TabelaRelatorios"
         $xlNone = -4142
         for ($r = 3; $r -le $last; $r++) {
-            foreach ($c in @(1, 3, 4, 5)) {
+            foreach ($c in @(1, 3, 4, 5, 6, 7)) {
                 $ws.Cells.Item($r, $c).Interior.Pattern = $xlNone
             }
         }
         $lo.TableStyle = "TableStyleMedium2"
         $lo.ShowTableStyleRowStripes = $true
         $lo.ShowTableStyleColumnStripes = $false
-        # Largura da coluna Arquivo
         $ws.Columns.Item(5).ColumnWidth = 60
         Write-Host "TABLE_OK rows=$($lo.ListRows.Count) last=$last stripes=$($lo.ShowTableStyleRowStripes)"
     }
@@ -108,24 +111,19 @@ try {
 
     if ($vbaOk) {
         if (Test-Path -LiteralPath $pathXlsmTmp) { Remove-Item -LiteralPath $pathXlsmTmp -Force }
-        $wb.SaveAs($pathXlsmTmp, 52)  # xlOpenXMLWorkbookMacroEnabled
+        $wb.SaveAs($pathXlsmTmp, 52)
         Write-Host "SAVED_TMP"
         $wb.Close($true)
         Start-Sleep -Seconds 1
-        Copy-Item -LiteralPath $pathXlsmTmp -Destination $pathXlsm -Force
-        Write-Host "SAVED_XLSM $pathXlsm"
-        # Só o .xlsm fica em Exames\ (o .xlsx é intermediário de build)
-        if (Test-Path -LiteralPath $pathXlsx) {
-            Remove-Item -LiteralPath $pathXlsx -Force
-            Write-Host "REMOVED_XLSX"
-        }
+        py -3 (Join-Path $here "copy_resumo_relatorios.py")
+
     } else {
         $wb.Close($false)
-        throw "Não consegui instalar o VBA (marque 'Confiar no acesso ao modelo de objeto do projeto do VBA' nas opções do Excel)."
+        throw "Não consegui instalar o VBA."
     }
 }
 finally {
-    $excel.Quit() | Out-Null
+    try { $excel.Quit() | Out-Null } catch {}
     [System.Runtime.InteropServices.Marshal]::ReleaseComObject($excel) | Out-Null
     if ($null -ne $oldVbom) {
         Set-ItemProperty -Path $reg -Name AccessVBOM -Value $oldVbom
@@ -134,4 +132,4 @@ finally {
     }
 }
 
-Write-Host "Pronto. Abra Resumo Exames.xlsm em Exames\ (habilitar macros)."
+Write-Host "Pronto. Abra Resumo Relatórios.xlsm em Relatórios\ (habilitar macros)."

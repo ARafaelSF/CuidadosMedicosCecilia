@@ -15,7 +15,7 @@ DEST_EVOL_XLSM_TMP = TEMP / "EvolucaoExames.xlsm"
 DEST_EVOL_XLSM = EXAMES / "Evolução Exames.xlsm"
 
 RESUMO_EXAMES = EXAMES / "Resumo Exames.xlsm"
-RESUMO_RELATORIOS = RELATORIOS / "Resumo Relatórios.xlsx"
+RESUMO_RELATORIOS = RELATORIOS / "Resumo Relatórios.xlsm"
 RESUMO_CTI = CTI / "Resumo Exames CTI.xlsx"
 EVOL_CTI = CTI / "Evolução Exames CTI.xlsx"
 
