@@ -1,0 +1,12 @@
+Solicitação / renovação de medicamento CEAF (Farmácia de Minas) — Cecília
+
+Pastas:
+- Solicitação Inicial/  → processo inicial (já entregue/arquivado)
+- _Modelos/             → PDFs editáveis em branco (LME + Monitoramento GH)
+- AAAA-MM/              → renovação do mês (ex.: 2026-08)
+
+Para criar um mês novo:
+  py -3 codigo/sus/gerar_mes.py 2026-09
+
+Renovação SES-MG (checklist): a cada 6 meses — LME + receita de controle especial + Formulário de Monitoramento.
+A pasta mensal ajuda a organizar; o médico ainda precisa assinar/carimbar.

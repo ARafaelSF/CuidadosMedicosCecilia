@@ -50,7 +50,8 @@ try {
         $ws.Cells.Item($row, 2).Value2 = $false
         $cb.Display3DShading = $false
         try { $cb.PrintObject = $false } catch {}
-        try { $cb.OnAction = "AtualizarImpressao" } catch {}
+        # Sem OnAction: clique so marca a celula; filtragem ao abrir abas Selecionados
+        try { $cb.OnAction = "NopSelecao" } catch {}
     }
     Write-Host "boxes $($ws.CheckBoxes().Count)"
 
@@ -110,11 +111,12 @@ try {
 
     $count = $ws.CheckBoxes().Count
     for ($i = 1; $i -le $count; $i++) {
-        try { $ws.CheckBoxes().Item($i).OnAction = "AtualizarImpressao" } catch {}
+        try { $ws.CheckBoxes().Item($i).OnAction = "NopSelecao" } catch {}
     }
 
     if ($vbaOk) {
         try {
+            $excel.Run("LimparOnActionCaixas")
             $excel.Run("AtualizarImpressao")
             Write-Host "MACRO_RUN"
         } catch {

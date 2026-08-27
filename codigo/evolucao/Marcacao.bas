@@ -28,15 +28,18 @@ Private Function Folha(nome As String) As Worksheet
 End Function
 
 Public Sub AtualizarImpressao()
-    Dim wsS As Worksheet, wsC As Worksheet, wsG As Worksheet
+    ' Aplica marcas da aba Escolher nas abas "… Selecionados".
+    ' Nao chamar a cada clique — so ao abrir essas abas / imprimir / abrir o arquivo.
+    Dim wsS As Worksheet, wsG As Worksheet
     Dim wsM As Worksheet, wsE As Worksheet
     Dim last As Long, i As Long, er As Long
-    Dim r1 As Long, r2 As Long, g1 As Long, g2 As Long, r As Long
+    Dim r1 As Long, r2 As Long, g1 As Long, g2 As Long
     Dim v As Variant, show As Boolean
+    Dim calcAnt As Long
 
     On Error GoTo Falha
+    calcAnt = Application.Calculation
     Set wsS = Folha(ABA_DADOS_SEL)
-    Set wsC = Folha(ABA_DADOS_COMP)
     Set wsM = Folha(ABA_MAPA)
     Set wsE = Folha(ABA_ESCOLHER)
     Set wsG = Folha(ABA_GRAF_SEL)
@@ -46,6 +49,10 @@ Public Sub AtualizarImpressao()
 
     Application.ScreenUpdating = False
     Application.EnableEvents = False
+    On Error Resume Next
+    Application.Calculation = xlCalculationManual
+    Err.Clear
+    On Error GoTo Falha
 
     wsS.Rows.Hidden = False
     If Not wsG Is Nothing Then wsG.Rows.Hidden = False
@@ -61,28 +68,47 @@ Public Sub AtualizarImpressao()
         If Not IsEmpty(wsM.Cells(i, 5).Value) Then g2 = CLng(wsM.Cells(i, 5).Value)
         v = wsE.Cells(er, 2).Value
         show = CelulaMarcada(v)
+        ' Um bloco por vez (muito mais rapido que linha a linha)
         If r1 > 0 And r2 >= r1 Then
-            For r = r1 To r2
-                wsS.Rows(r).Hidden = Not show
-            Next r
+            wsS.Rows(r1 & ":" & r2).Hidden = Not show
         End If
         If Not wsG Is Nothing Then
             If g1 > 0 And g2 >= g1 Then
-                For r = g1 To g2
-                    wsG.Rows(r).Hidden = Not show
-                Next r
+                wsG.Rows(g1 & ":" & g2).Hidden = Not show
             End If
         End If
     Next i
 
     If Not wsG Is Nothing Then AplicarGraficos wsG, wsM, wsE, last
 
+    On Error Resume Next
+    Application.Calculation = calcAnt
+    Err.Clear
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     Exit Sub
 Falha:
+    On Error Resume Next
+    Application.Calculation = calcAnt
     Application.EnableEvents = True
     Application.ScreenUpdating = True
+End Sub
+
+Public Sub LimparOnActionCaixas()
+    ' Clique so altera LinkedCell. OnAction vazio as vezes nao grava no Excel/OneDrive —
+    ' por isso apontamos para um no-op.
+    Dim ws As Worksheet
+    Dim cb As CheckBox
+    On Error Resume Next
+    Set ws = Folha(ABA_ESCOLHER)
+    If ws Is Nothing Then Exit Sub
+    For Each cb In ws.CheckBoxes
+        cb.OnAction = "NopSelecao"
+    Next cb
+End Sub
+
+Public Sub NopSelecao()
+    ' Vazio de proposito: evita AtualizarImpressao a cada clique.
 End Sub
 
 Public Sub ImprimirGraficosSelecionados()
@@ -870,14 +896,17 @@ Private Sub AplicarGraficos(wsG As Worksheet, wsM As Worksheet, wsE As Worksheet
         On Error Resume Next
         co.Placement = xlMoveAndSize
         If show Then
-            co.Visible = True
+            If Not co.Visible Then co.Visible = True
             co.ShapeRange.Visible = msoTrueVal
-            co.Left = wsG.Cells(r, 1).Left
-            co.Top = wsG.Cells(r, 1).Top
-            If w > 20 Then co.Width = w
-            If h > 20 Then co.Height = h
+            ' So reposiciona se estiver fora do lugar (evita custo a cada atualizacao)
+            If Abs(co.Left - wsG.Cells(r, 1).Left) > 2 Or Abs(co.Top - wsG.Cells(r, 1).Top) > 2 Then
+                co.Left = wsG.Cells(r, 1).Left
+                co.Top = wsG.Cells(r, 1).Top
+            End If
+            If w > 20 And Abs(co.Width - w) > 2 Then co.Width = w
+            If h > 20 And Abs(co.Height - h) > 2 Then co.Height = h
         Else
-            co.Visible = False
+            If co.Visible Then co.Visible = False
             co.ShapeRange.Visible = msoFalseVal
         End If
         On Error GoTo 0

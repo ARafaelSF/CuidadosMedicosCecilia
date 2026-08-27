@@ -2164,13 +2164,13 @@ def build(path: Path):
     how.write(0, 0, "Como usar", f_title)
     lines = [
         "",
-        "Aba Escolher — clique no quadradinho à esquerda. Marca e desmarca a cada clique.",
+        "Aba Escolher — clique no quadradinho à esquerda. Marca e desmarca na hora (sem esperar).",
         "Aba Dados Completo — sempre todas as tabelas, independente das caixinhas. Coluna Arquivo = PDF daquela linha.",
-        "Aba Dados Selecionados — as tabelas que você marcou. Também tem a coluna Arquivo. Imprimir em paisagem. Precisa habilitar macros.",
+        "Aba Dados Selecionados — ao abrir a aba, mostra só o que você marcou. Coluna Arquivo. Imprimir em paisagem. Precisa habilitar macros.",
         "Para imprimir gráficos em retrato: escolha 3 ou 4 por folha e clique Imprimir selecionados ou Imprimir todos.",
         "Gráfico só com dois ou mais resultados. Exame com um dado só (ex.: pH, B12, Fator XIII) vai numa tabela no final, sem gráfico.",
         "Aba Graficos Completo — exames numéricos. Se o laudo tem faixa, a barra é essa faixa naquela data (verde dentro, vermelho fora). Sem faixa, aparece só a linha do resultado.",
-        "Aba Graficos Selecionados — os mesmos gráficos, só dos itens marcados. Habilite macros; ela atualiza ao você abrir ela.",
+        "Aba Graficos Selecionados — ao abrir a aba, atualiza e mostra só os gráficos marcados.",
         "A faixa muda com a idade (ex.: IGF-1, hemoglobina, leucócitos). Cada ponto usa a faixa daquele laudo.",
         "Sem gráfico: o que é qualitativo (urina descritiva, genética, imagens, pezinho, grupo sanguíneo, suor em foto).",
         "Valores conferidos nos PDFs da pasta Exames. Não substitui o laudo. Conduta é com o médico.",
