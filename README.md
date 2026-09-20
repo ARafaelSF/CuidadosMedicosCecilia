@@ -14,7 +14,7 @@ Repositório **privado**. São dados de saúde: não tornar público.
 | `Solicitação Medicamento SUS/` | Pedido e documentos da solicitação de medicamento. |
 | `Marcos de Desenvolvimento/` | Marcos da criança (diário Momentos). Planilha `Marcos.xlsx`. |
 
-Não entram no Git (ficam só no computador): Batizado, Documentos, Livros e Apostilas, CTI - Fotos e Recados.
+Não entram no Git (ficam só no computador): Batizado, Documentos, Livros e Apostilas, CTI - Fotos e Recados, Histórico Cecília Compartilhado (cópia para compartilhar).
 
 ## Arquivos principais
 
