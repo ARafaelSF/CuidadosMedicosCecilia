@@ -12,6 +12,7 @@ Repositório **privado**. São dados de saúde: não tornar público.
 | `Exames/` | Laudos (sangue, imagem, audiologia, pezinho, EEG, suor). O CTI laboratorial (ago–set/2020, Hospital BH) fica em `Exames/Exames Laboratorias - CTI/` — **não misturar** com o resto. |
 | `Relatórios/` | Consultas, terapias, escola e **sumários de alta** hospitalar. |
 | `Solicitação Medicamento SUS/` | Pedido e documentos da solicitação de medicamento. |
+| `Marcos de Desenvolvimento/` | Marcos da criança (diário Momentos). Planilha `Marcos.xlsx`. |
 
 Não entram no Git (ficam só no computador): Batizado, Documentos, Livros e Apostilas, CTI - Fotos e Recados.
 
@@ -22,6 +23,7 @@ Não entram no Git (ficam só no computador): Batizado, Documentos, Livros e Apo
 - `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`
 - `Exames/Evolução Exames.xlsm` — evolução com caixinhas (**arquivo ativo**; habilitar macros)
 - `Exames/Exames Laboratorias - CTI/Evolução Exames CTI.xlsx` — evolução do CTI, sem macros
+- `Marcos de Desenvolvimento/Marcos.xlsx` — marcos de desenvolvimento (regenerar: `py -3 codigo/marcos/build_marcos.py`)
 
 ## Como nomear
 

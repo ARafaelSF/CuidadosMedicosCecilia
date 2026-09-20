@@ -8,6 +8,7 @@ EXAMES = ROOT / "Exames"
 RELATORIOS = ROOT / "Relatórios"
 CTI = EXAMES / "Exames Laboratorias - CTI"
 DOCUMENTOS = ROOT / "Documentos"
+MARCOS = ROOT / "Marcos de Desenvolvimento"
 
 TEMP = Path.home() / "AppData" / "Local" / "Temp"
 DEST_EVOL_XLSX = TEMP / "EvolucaoExames.xlsx"
@@ -18,6 +19,7 @@ RESUMO_EXAMES = EXAMES / "Resumo Exames.xlsm"
 RESUMO_RELATORIOS = RELATORIOS / "Resumo Relatórios.xlsm"
 RESUMO_CTI = CTI / "Resumo Exames CTI.xlsx"
 EVOL_CTI = CTI / "Evolução Exames CTI.xlsx"
+RESUMO_MARCOS = MARCOS / "Marcos.xlsx"
 
 TIPOS_EXAME = [
     "Sangue", "Urina", "Imagem", "Pezinho", "Audiologia", "EEG",

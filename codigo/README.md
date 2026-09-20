@@ -13,6 +13,7 @@ Paciente: **Cecília Maria Albergaria Silva**, nasc. 30/06/2020.
 | `Relatórios/` | Consultas, terapias, escola e sumários de alta hospitalar. |
 | `Relatórios/Imprimir/` | PDFs juntados por tipo+profissional (`Imprimir - …`). Originais intactos. Regenerar: `py -3 codigo/imprimir/juntar_relatorios.py`. |
 | `Documentos/` | Cartão SUS, certidão, declaração de nascido vivo, etc. |
+| `Marcos de Desenvolvimento/` | Marcos da criança a partir do diário Momentos. Planilha `Marcos.xlsx`. Regenerar: `py -3 codigo/marcos/build_marcos.py`. |
 | `_Organizado/` (raiz) | Só PDFs **novos**, ainda sem nome. Depois de processar, a raiz fica vazia. |
 
 Resumos: `Exames/Resumo Exames.xlsm`, `Relatórios/Resumo Relatórios.xlsm` (ambos com macro de altura), `Exames/Exames Laboratorias - CTI/Resumo Exames CTI.xlsx`.
